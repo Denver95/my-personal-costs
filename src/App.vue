@@ -4,17 +4,17 @@
     <div class="style_container">
       <!-- Заголовок приложения -->
       <header class="header-top-costs">
-        <div class="contsiner">
+        <div class="container">
           <h2 class="header-top-costs-h2">My personal costs</h2>
         </div>
       </header>
       <!-- Основная разметка приложения, включая отдельные компоненты -->
       <main class="main-container">
-        <div class="container">
+        <div class="container position">
           <!--Разметка для кнопки добавления расходов  -->
-          <header class="button-add-costs">
+          <div class="button-add-costs">
             <ButtonAddCosts />
-          </header>
+          </div>
           <!-- Блок для отображения формы ввода расходов -->
           <div class="form-add-costs">
             <!-- Принимаем значения  -->
@@ -54,13 +54,16 @@ export default {
     return {
       // Массив с расходами
       costsList: [],
-
     }
+
   },
   methods: {
     //функция fetchData отдает определенный набор текстовых данных массива
     fetchData() {
       return [
+        {
+
+        },
         {
           date: '01.11.2022',
           category: 'Продукты',
@@ -94,6 +97,7 @@ export default {
       ]
     },
     addNewPayment(data) {
+      // this.costsList.unshift([... this.costsList, data]);
       this.costsList = [... this.costsList, data];
     },
   },
@@ -103,10 +107,50 @@ export default {
     this.costsList = this.fetchData();
   },
 
+
 }
 
 </script>
 
 <style lang="scss">
+html {
+  height: 100%;
+  background-color: rgb(120 71 24 / 48%);
+  text-align: center;
+}
 
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+#app {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+// .style_container {
+//   height: 100%;
+//   background-color: rgb(120 71 24 / 48%);
+//   text-align: center;
+// }
+
+.header-top-costs {
+  padding: 30px 0;
+}
+
+.container {
+  width: 1140px;
+  margin: 0 auto;
+}
+
+
+.header-top-costs-h2 {
+  display: inline-block;
+  font-size: 30px;
+  line-height: 45px;
+}
+
+.main-container {
+  margin: 20px 0px;
+}
 </style>
