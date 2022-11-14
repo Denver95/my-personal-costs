@@ -62,35 +62,32 @@ export default {
     fetchData() {
       return [
         {
-
-        },
-        {
-          date: '01.11.2022',
+          date: '06.11.2022',
           category: 'Продукты',
           value: 50,
         },
         {
-          date: '02.11.2022',
+          date: '05.11.2022',
           category: 'Заправка',
           value: 100,
         },
         {
-          date: '03.11.2022',
+          date: '04.11.2022',
           category: 'Продукты + обед',
           value: 70,
         },
         {
-          date: '04.11.2022',
+          date: '03.11.2022',
           category: 'Обед',
           value: 5,
         },
         {
-          date: '05.11.2022',
+          date: '02.11.2022',
           category: 'Обед',
           value: 6,
         },
         {
-          date: '06.11.2022',
+          date: '01.11.2022',
           category: 'Обед',
           value: 5,
         },
@@ -98,7 +95,8 @@ export default {
     },
     addNewPayment(data) {
       // this.costsList.unshift([... this.costsList, data]);
-      this.costsList = [... this.costsList, data];
+      // this.costsList = [... this.costsList, data];
+      this.costsList.unshift(data);
     },
   },
 

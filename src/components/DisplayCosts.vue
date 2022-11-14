@@ -3,27 +3,30 @@
 	<div class="block-display-costs">
 		<ul class="table-display-costs">
 			<ul class="string-table-head">
-				<li class="colum-id table-text table-margin"><span class="tabel-span">#</span></li>
-				<li class="colum-date table-text table-margin"><span class="tabel-span">Date</span></li>
-				<li class="colum-category table-text table-margin"><span class="tabel-span">Category</span></li>
-				<li class="colum-value table-text table-margin"><span class="tabel-span">Value</span></li>
+				<li class="colum-id table-text table-margin"><span class="tabel-span">№</span></li>
+				<li class="colum-date table-text table-margin"><span class="tabel-span">Дата</span></li>
+				<li class="colum-category table-text table-margin"><span class="tabel-span">Наименование</span></li>
+				<li class="colum-value table-text table-margin"><span class="tabel-span">Цена(p.)</span></li>
 			</ul>
-			<ul class="string-table-array" v-for="(item, index) of items" v-bind:key="index">
-				<li class="colum-id table-text table-margin">{{ index }}</li>
+			<ul v-for="(item, index) of items" class="string-table-array" v-bind:key="index">
+				<li class="colum-id table-text table-margin">{{ index + 1 }}</li>
 				<li class="colum-date table-text table-margin">{{ item.date }}</li>
 				<li class="colum-category table-text table-margin">{{ item.category }}</li>
-				<li class="colum-value table-text table-margin">{{ item.value }}</li>
+				<li class="colum-value table-text table-margin">{{ item.value }} p.</li>
 			</ul>
 		</ul>
 	</div>
 </template>
 
 <script>
+
+
 export default {
 	name: 'DisplayCosts',
 	//Получение данных из родителя. Получение данных через свойсвтво (Называем наше свойство 'items')
 	props: {
-		//Мы сделали строгий вид, чтоб в случии передачи нам НЕ массива то сразу выдаст ошибку
+
+		// Мы сделали строгий вид, чтоб в случии передачи нам НЕ массива то сразу выдаст ошибку
 		items: {
 			//Строгий вид с указанием значения (Array) массив
 			type: Array,
