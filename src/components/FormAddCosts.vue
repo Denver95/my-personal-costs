@@ -2,10 +2,12 @@
 	<!-- Создали верстку для заполнения данных -->
 	<div class="form-container hidden ">
 		<div class="block-form">
-			<input placeholder="Наименование" v-model="category" class="input-form-add input-FA-category" />
+			<!-- <input placeholder="Наименование" v-model="category" class="input-form-add input-FA-category" /> -->
+			<select v-model="category" class="input-form-add input-FA-category">
+				<option v-for="option, ind in options" v-bind:key="ind">{{ option }}</option>
+			</select>
 			<input placeholder="Цена" v-model="value" class="input-form-add input-FA-value" />
 			<input placeholder="Дата (01.01.2023)" v-model="date" class="input-form-add input-FA-date" />
-
 		</div>
 		<!-- При нажатии на кнопку будем осуществлять передачу данных родителю при помощи (onSaveClick) -->
 		<button v-on:click="onSaveClick" class="btn-form-add">ADD</button>
@@ -15,8 +17,7 @@
 
 <script>
 
-
-
+import { mapMutations, mapActions, mapGetters } from 'vuex';
 
 export default {
 	name: 'FormAddCosts',
@@ -37,122 +38,46 @@ export default {
 			const y = today.getFullYear();
 
 			return `${d}.${m}.${y}`;
-		}
+		},
+
+		getCurrentValue() {
+			if (this.value == '') {
+				return Number(this.value = 0);
+			}
+		},
+
+		options() {
+			return this.$store.getters.getCategoryList
+		},
 	},
 	methods: {
 
-		// < input placeholder="Payment description" v- model="category" class="input-form-add input-FA-category" />
-		// <input placeholder="Payment amount" v-model="value" class="input-form-add input-FA-value" />
-		// <input placeholder="Payment date(01.01.2023)" v-model="date" class="input-form-add input-FA-date" />
-
-		checkCorrectValue() {
-
-			const inputCategory = document.querySelector('.input-FA-category');
-			const inputValue = document.querySelector('.input-FA-value');
-			const inputDate = document.querySelector('.input-FA-date');
-
-
-
-			if (this.category != String(this.category) || this.category == '' || this.category == Number(this.category)) {
-				inputCategory.classList.add('errorCategory');
-				inputCategory.placeholder = "Ожидается строка";
-			} else {
-				inputCategory.classList.remove('errorCategory');
-				return this.category;
-			};
-
-			// Провекра ввода цена на корректное значение
-			if (this.value != Number(this.value) || this.value == '') {
-				inputValue.classList.add('errorValue');
-				inputValue.placeholder = "Введите число";
-			} else {
-				inputValue.classList.remove('errorValue');
-				return this.value;
-			};
-
-			//  Провекра ввода Даты на пустую строку. Если она пустаня то генерируется дата.
-			// Если мы тут подставляем дату, то можно попробыть убрать метод 		getCurrentDate() {
-
-			this.onSaveClick(this.value, this.category);
-		},
-
-
-		// checkCorrectValue(value, category, date) {
-
-		// 	const inputCategory = document.querySelector('.input-FA-category');
-		// 	const inputValue = document.querySelector('.input-FA-value');
-		// 	const inputDate = document.querySelector('.input-FA-date');
-
-		// 	if (value != Number(value)) {
-		// 		inputValue.classList.add('errorValue');
-		// 	} else if (date != Number(date)) {
-		// 		inputDate.classList.add('errorDate');
-		// 	} else if (category != String(category)) {
-		// 		inputCategory.classList.add('errorCategory');
-		// 	} else
-		// 		onSaveClick(value, category, date);
-		// },
-
-		// onSaveClick(value, category, date) {
-		// 	// Создаем переменную которая будет хранить передаваемые данные.
-		// 	// В параметр $emit передаем название события  (addNewPayment)  и данные которые ввели.
-		// 	const data = {
-		// 		value: value,
-		// 		category: category,
-		// 		date: date || this.getCurrentDate,
-		// 	}
-
-		// 	this.$emit('addNewPayment', data);
-		// // },
-
-
+		...mapMutations({
+			addData: 'addDataCosts',
+		}),
 
 		onSaveClick() {
 			// Создаем переменную которая будет хранить передаваемые данные.
 			// В параметр $emit передаем название события  (addNewPayment)  и данные которые ввели.
 			const data = {
-				value: this.value,
+				value: Number(this.value) || this.getCurrentValue,
 				category: this.category,
-				date: this.date,
+				date: this.date || this.getCurrentDate,
 			}
 
-			this.$emit('addNewPayment', data);
+			this.addData(data)
 
 			this.value = '';
 			this.category = '';
 			this.date = '';
 
 		}
-		// 	const data = {
-		// 		value: value,
-		// 		category: category,
-		// 		date: date,
-		// }
-
-		// 	this.$emit('addNewPayment', data);
-
-		// 	this.value = '';
-		// 	this.category = '';
-		// 	this.date = '';
-		// },
-		// onSaveClick() {
-		// 	// Создаем переменную которая будет хранить передаваемые данные.
-		// 	// В параметр $emit передаем название события  (addNewPayment)  и данные которые ввели.
-		// 	const data = {
-		// 		value: this.value,
-		// 		category: this.category,
-		// 		date: this.date || this.getCurrentDate,
-		// 	}
-
-		// 	this.$emit('addNewPayment', data);
-
-		// 	this.value = '';
-		// 	this.category = '';
-		// 	this.date = '';
-		// },
-
 	},
-
+	mounted() {
+		if (!this.category?.length) {
+			this.$store.dispatch('loadCategory')
+		}
+	},
 
 }
 

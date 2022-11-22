@@ -18,22 +18,17 @@
           <!-- Блок для отображения формы ввода расходов -->
           <div class="form-add-costs">
             <!-- Принимаем значения  -->
-            <FormAddCosts v-on:addNewPayment="addNewPayment" />
+            <FormAddCosts />
           </div>
+
           <!-- Блок отоборажения данных о затрах и граффик -->
           <div class="display-costs">
             <!-- Передаем данные из costsList в наш аргумент items -->
-            <DisplayCosts :items="costsList" />
+            <DisplayCosts />
           </div>
         </div>
       </main>
-
-
     </div>
-
-
-
-
   </div>
 </template>
 
@@ -42,7 +37,7 @@ import ButtonAddCosts from './components/ButtonAddCosts.vue';
 import FormAddCosts from './components/FormAddCosts.vue';
 import DisplayCosts from './components/DisplayCosts.vue';
 
-
+import { mapActions } from 'vuex';
 export default {
   name: "App",
   components: {
@@ -50,59 +45,16 @@ export default {
     FormAddCosts,
     DisplayCosts,
   },
-  data() {
-    return {
-      // Массив с расходами
-      costsList: [],
-    }
 
-  },
   methods: {
-    //функция fetchData отдает определенный набор текстовых данных массива
-    fetchData() {
-      return [
-        {
-          date: '06.11.2022',
-          category: 'Продукты',
-          value: 50,
-        },
-        {
-          date: '05.11.2022',
-          category: 'Заправка',
-          value: 100,
-        },
-        {
-          date: '04.11.2022',
-          category: 'Продукты + обед',
-          value: 70,
-        },
-        {
-          date: '03.11.2022',
-          category: 'Обед',
-          value: 5,
-        },
-        {
-          date: '02.11.2022',
-          category: 'Обед',
-          value: 6,
-        },
-        {
-          date: '01.11.2022',
-          category: 'Обед',
-          value: 5,
-        },
-      ]
-    },
-    addNewPayment(data) {
-      // this.costsList.unshift([... this.costsList, data]);
-      // this.costsList = [... this.costsList, data];
-      this.costsList.unshift(data);
-    },
+    ...mapActions([
+      'fetchData'
+    ]),
   },
 
   //Массив costsList принимает функцию с текстовыми
   created() {
-    this.costsList = this.fetchData();
+    this.fetchData()
   },
 
 
@@ -146,6 +98,12 @@ html {
   display: inline-block;
   font-size: 30px;
   line-height: 45px;
+}
+
+.display-costs {
+  position: absolute;
+  top: 290px;
+  left: calc(50% - 300px);
 }
 
 .main-container {
