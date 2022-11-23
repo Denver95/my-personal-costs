@@ -9,32 +9,43 @@
 				<li class="colum-category table-text table-margin"><span class="tabel-span">Наименование</span></li>
 				<li class="colum-value table-text table-margin"><span class="tabel-span">Цена(p.)</span></li>
 			</ul>
-			<ul v-for="(item, index) of costsList" class="string-table-array" v-bind:key="index">
+			<ul v-for="(item, index) of items" class="string-table-array" v-bind:key="index">
 				<li class="colum-id table-text table-margin">{{ index + 1 }}</li>
 				<li class="colum-date table-text table-margin">{{ item.date }}</li>
 				<li class="colum-category table-text table-margin">{{ item.category }}</li>
 				<li class="colum-value table-text table-margin">{{ item.value }} p.</li>
 			</ul>
 		</ul>
+
 	</div>
 </template>
 
 <script>
 
-import { mapGetters } from 'vuex';
+
 
 export default {
 	name: 'DisplayCosts',
-	computed: {
-		...mapGetters({
-			getSumCosts: 'getCostsListValue',
-			costsList: 'getCostsList'
-		}),
+	props: {
+
+		// Мы сделали строгий вид, чтоб в случии передачи нам НЕ массива то сразу выдаст ошибку
+		items: {
+			//Строгий вид с указанием значения (Array) массив
+			type: Array,
+			default: [],
+		},
+		getSumCosts: Number,
+
 	},
+
+	// computed: {
+	// 	...mapGetters({
+	// 		getSumCosts: 'getCostsListValue',
+	// 		costsList: 'getCostsList'
+	// 	}),
+
+	// }
 }
-
-
-
 </script>
 
 <style>
@@ -42,7 +53,9 @@ li {
 	list-style-type: none;
 }
 
-
+.block-display-costs {
+	height: 360px;
+}
 
 .table-display-costs {
 	width: 600px;

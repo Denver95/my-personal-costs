@@ -71,8 +71,9 @@ export default {
 			this.category = '';
 			this.date = '';
 
-		}
+		},
 	},
+
 	mounted() {
 		if (!this.category?.length) {
 			this.$store.dispatch('loadCategory')
@@ -80,10 +81,6 @@ export default {
 	},
 
 }
-
-
-
-
 
 </script>
 

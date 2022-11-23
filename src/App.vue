@@ -24,7 +24,10 @@
           <!-- Блок отоборажения данных о затрах и граффик -->
           <div class="display-costs">
             <!-- Передаем данные из costsList в наш аргумент items -->
-            <DisplayCosts />
+            <DisplayCosts :items="curentElements" :getSumCosts="getSumCosts" />
+          </div>
+          <div class="pagination-costs">
+            <Pagination :cur="page" :n="pageQuantity" :length="costsList.length" @pagination="onChangePage" />
           </div>
         </div>
       </main>
@@ -36,20 +39,41 @@
 import ButtonAddCosts from './components/ButtonAddCosts.vue';
 import FormAddCosts from './components/FormAddCosts.vue';
 import DisplayCosts from './components/DisplayCosts.vue';
+import Pagination from './components/Pagination.vue';
 
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 export default {
   name: "App",
+  data() {
+    return {
+      page: 1,
+      pageQuantity: 10,
+    }
+  },
+
   components: {
+    Pagination,
     ButtonAddCosts,
     FormAddCosts,
     DisplayCosts,
   },
 
+  computed: {
+    ...mapGetters({
+      costsList: 'getCostsList',
+      getSumCosts: 'getCostsListValue',
+    }),
+    curentElements() {
+      return this.costsList.slice(this.pageQuantity * (this.page - 1), this.pageQuantity * (this.page - 1) + this.pageQuantity);
+    }
+  },
   methods: {
     ...mapActions([
       'fetchData'
     ]),
+    onChangePage(p) {
+      this.page = p
+    },
   },
 
   //Массив costsList принимает функцию с текстовыми
@@ -78,11 +102,6 @@ html {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-// .style_container {
-//   height: 100%;
-//   background-color: rgb(120 71 24 / 48%);
-//   text-align: center;
-// }
 
 .header-top-costs {
   padding: 30px 0;
@@ -93,6 +112,10 @@ html {
   margin: 0 auto;
 }
 
+.position {
+  position: relative;
+}
+
 
 .header-top-costs-h2 {
   display: inline-block;
@@ -100,13 +123,19 @@ html {
   line-height: 45px;
 }
 
-.display-costs {
-  position: absolute;
-  top: 290px;
-  left: calc(50% - 300px);
-}
+// .display-costs {
+//   position: absolute;
+//   top: 160px;
+//   left: calc(50% - 300px);
+// }
 
 .main-container {
   margin: 20px 0px;
 }
+
+// .pagination-costs {
+//   position: absolute;
+//   left: 50%;
+//   top: 400px;
+// }
 </style>
