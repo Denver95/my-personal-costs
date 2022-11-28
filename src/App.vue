@@ -1,87 +1,36 @@
 <template>
   <div id="app">
-    <!-- Контейнер для стилей или выравнивания -->
-    <div class="style_container">
-      <!-- Заголовок приложения -->
-      <header class="header-top-costs">
-        <div class="container">
-          <h2 class="header-top-costs-h2">My personal costs</h2>
-        </div>
-      </header>
-      <!-- Основная разметка приложения, включая отдельные компоненты -->
-      <main class="main-container">
-        <div class="container position">
-          <!--Разметка для кнопки добавления расходов  -->
-          <div class="button-add-costs">
-            <ButtonAddCosts />
-          </div>
-          <!-- Блок для отображения формы ввода расходов -->
-          <div class="form-add-costs">
-            <!-- Принимаем значения  -->
-            <FormAddCosts />
-          </div>
+    <header>
+      <div>
+        <!-- Меняем все на router-link -->
+        <router-link to="/payment" class="a-page">Dashboard</router-link>
+        <router-link to="/about" class="a-page">About</router-link>
+        <router-link to="/cart" class="a-page">Cart</router-link>
+        <!-- <router-link to="/error" class="a-page">Error</router-link> -->
+        <!-- <div @click="goTopage">click</div> -->
+      </div>
+      <!-- Тут мы указываем куда будем отображать содержимое страниц -->
+      <router-view />
+    </header>
 
-          <!-- Блок отоборажения данных о затрах и граффик -->
-          <div class="display-costs">
-            <!-- Передаем данные из costsList в наш аргумент items -->
-            <DisplayCosts :items="curentElements" :getSumCosts="getSumCosts" />
-          </div>
-          <div class="pagination-costs">
-            <Pagination :cur="page" :n="pageQuantity" :length="costsList.length" @pagination="onChangePage" />
-          </div>
-        </div>
-      </main>
-    </div>
   </div>
 </template>
 
 <script>
-import ButtonAddCosts from './components/ButtonAddCosts.vue';
-import FormAddCosts from './components/FormAddCosts.vue';
-import DisplayCosts from './components/DisplayCosts.vue';
-import Pagination from './components/Pagination.vue';
 
-import { mapActions, mapGetters } from 'vuex';
 export default {
   name: "App",
-  data() {
-    return {
-      page: 1,
-      pageQuantity: 10,
-    }
-  },
 
-  components: {
-    Pagination,
-    ButtonAddCosts,
-    FormAddCosts,
-    DisplayCosts,
-  },
-
-  computed: {
-    ...mapGetters({
-      costsList: 'getCostsList',
-      getSumCosts: 'getCostsListValue',
-    }),
-    curentElements() {
-      return this.costsList.slice(this.pageQuantity * (this.page - 1), this.pageQuantity * (this.page - 1) + this.pageQuantity);
-    }
-  },
   methods: {
-    ...mapActions([
-      'fetchData'
-    ]),
-    onChangePage(p) {
-      this.page = p
-    },
+    goTopage() {
+      // Делаем проверку по Name
+      if (this.$route.name === 'About') return
+      this.$router.push({
+        name: 'About'
+        //Если мы находимся на этой странице и нажимаем на КЛИК (вызов метода) то будут ошибки. Нужно сделать проверку
+      })
+    }
   },
-
-  //Массив costsList принимает функцию с текстовыми
-  created() {
-    this.fetchData()
-  },
-
-
 }
 
 </script>
@@ -102,40 +51,11 @@ html {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-
-.header-top-costs {
-  padding: 30px 0;
+.a-page {
+  margin: 5px 10px;
+  text-decoration: none;
+  color: black;
+  background-color: rgb(82 82 255 / 31%);
+  padding: 5px;
 }
-
-.container {
-  width: 1140px;
-  margin: 0 auto;
-}
-
-.position {
-  position: relative;
-}
-
-
-.header-top-costs-h2 {
-  display: inline-block;
-  font-size: 30px;
-  line-height: 45px;
-}
-
-// .display-costs {
-//   position: absolute;
-//   top: 160px;
-//   left: calc(50% - 300px);
-// }
-
-.main-container {
-  margin: 20px 0px;
-}
-
-// .pagination-costs {
-//   position: absolute;
-//   left: 50%;
-//   top: 400px;
-// }
 </style>

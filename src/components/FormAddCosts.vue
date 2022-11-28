@@ -46,9 +46,13 @@ export default {
 			}
 		},
 
-		options() {
-			return this.$store.getters.getCategoryList
-		},
+		...mapGetters({
+			options: 'getCategoryList',
+		}),
+
+		// options() {
+		// 	return this.$store.getters.getCategoryList
+		// },
 	},
 	methods: {
 
@@ -73,7 +77,7 @@ export default {
 
 		},
 	},
-
+	// ВЕРНУТСЯ
 	mounted() {
 		if (!this.category?.length) {
 			this.$store.dispatch('loadCategory')
