@@ -1,9 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Dashboard from '../page/Dashboard.page.vue'
-import About from '../page/About.page.vue'
-import Cart from '../page/cart.page.vue'
-import Error from '../page/Error404.page.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -11,31 +8,33 @@ const routes = [
   {
     path: '/payment',
     name: 'Dashboard',
-    component: Dashboard,
+    component: () => import('../page/Dashboard.page.vue'),
   },
-  {
-    // Добовалили еще один дашборад
-    path: '/payment/:page',
-    name: 'Dashboard',
-    component: Dashboard,
-  },
+  // {
+  //   // Добовалили еще один дашборад
+  //   path: '/payment/:page',
+  //   name: 'Dashboard',
+  //   component: Dashboard,
+  // },
   {
     //   * это свойство которое  дает возможность записывать  ссылки /about23423423 
     // path: '/about*',
     path: '/about',
     name: 'About',
-    component: About,
+    component: () => import('../page/About.page.vue'),
   },
   {
     path: '/cart',
     name: 'Cart',
-    component: Cart,
+    component: () => import('../page/cart.page.vue'),
   },
   {
     path: '/error',
     name: 'Error404',
-    component: Error,
+    component: () => import('../page/Error404.page.vue')
   },
+
+
 
   // /about234234 перенаправит нас на страницу error
   {

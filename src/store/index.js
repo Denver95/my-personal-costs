@@ -39,7 +39,9 @@ export default new Vuex.Store({
       // if (!Array.isArray(payload)) {
       //   payload = [payload]
       // }
-      state.categoryList.push(...payload)
+      if (state.categoryList.length == 0) {
+        state.categoryList.push(...payload)
+      }
     },
   },
   //асинхранный вызво
@@ -264,12 +266,10 @@ export default new Vuex.Store({
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve(['Еда', 'Транспорт', 'Спорт', 'Хобби', 'Развлечение', 'Одежда', 'Обувь',])
-        }, 2000);
+        }, 0);
       }).then(res => {
         commit('setCategoryData', res)
       })
     },
   },
-  modules: {
-  }
 })

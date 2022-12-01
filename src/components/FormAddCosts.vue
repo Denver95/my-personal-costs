@@ -1,6 +1,6 @@
 <template>
 	<!-- Создали верстку для заполнения данных -->
-	<div class="form-container hidden ">
+	<div class="form-container" v-if="isShown">
 		<div class="block-form">
 			<!-- <input placeholder="Наименование" v-model="category" class="input-form-add input-FA-category" /> -->
 			<select v-model="category" class="input-form-add input-FA-category">
@@ -10,13 +10,15 @@
 			<input placeholder="Дата (01.01.2023)" v-model="date" class="input-form-add input-FA-date" />
 		</div>
 		<!-- При нажатии на кнопку будем осуществлять передачу данных родителю при помощи (onSaveClick) -->
-		<button v-on:click="onSaveClick" class="btn-form-add">ADD</button>
+		<button v-on:click="onSaveClick" class="btn-form-add">add</button>
+		<button v-on:click="$modal.hide('formCosts')" class="btn-form-add">Close</button>
 	</div>
 
 </template>
 
 <script>
 
+import modalPlugins from '@/plugins/modalPlugins';
 import { mapMutations, mapActions, mapGetters } from 'vuex';
 
 export default {
@@ -27,6 +29,8 @@ export default {
 			date: '',
 			category: '',
 			value: '',
+			isShown: false,
+			form: 'formCosts',
 		}
 	},
 	computed: {
@@ -76,12 +80,29 @@ export default {
 			this.date = '';
 
 		},
+
+		onShow(id) {
+			if (id == this.form) {
+				this.isShown = true
+			}
+		},
+
+		onHide(id) {
+			if (id == this.form) {
+				this.isShown = false
+			}
+		}
 	},
 	// ВЕРНУТСЯ
 	mounted() {
+		//Подписываемся на приходящие нам методы. И описываем их в методах
+		this.$modal.EventBus.$on('modalShow', this.onShow)
+		this.$modal.EventBus.$on('modalHide', this.onHide)
+
 		if (!this.category?.length) {
 			this.$store.dispatch('loadCategory')
 		}
+
 	},
 
 }
@@ -89,10 +110,6 @@ export default {
 </script>
 
 <style>
-.hidden {
-	display: none;
-}
-
 .block-form {
 	display: flex;
 	align-items: center;
@@ -135,6 +152,7 @@ export default {
 	padding: 0 10px;
 	width: 100px;
 	cursor: pointer;
+	text-transform: uppercase;
 }
 
 .btn-form-add:hover {

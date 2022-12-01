@@ -11,15 +11,15 @@
 		<main class="main-container">
 			<div class="container position">
 				<!--Разметка для кнопки добавления расходов  -->
-				<div class="button-add-costs">
-					<ButtonAddCosts />
+				<div class="btn-add-costs">
+					<!-- Вызываем в modalPlugins метод show -->
+					<button class="btn-new-costs" v-on:click="$modal.show('formCosts')">add new costs</button>
 				</div>
-				<!-- Блок для отображения формы ввода расходов -->
-				<div class="form-add-costs">
+				<!-- Блок для отображения формы ввода расходов  с анимацией(Смотреть стили)-->
+				<Transition name="fade" class="form-add-costs">
 					<!-- Принимаем значения  -->
 					<FormAddCosts />
-				</div>
-
+				</Transition>
 				<!-- Блок отоборажения данных о затрах и граффик -->
 				<div class="display-costs">
 					<!-- Передаем данные из costsList в наш аргумент items -->
@@ -35,7 +35,6 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import ButtonAddCosts from '../components/ButtonAddCosts.vue';
 import FormAddCosts from '../components/FormAddCosts.vue';
 import DisplayCosts from '../components/DisplayCosts.vue';
 import Pagination from '../components/Pagination.vue';
@@ -44,7 +43,6 @@ export default {
 	name: 'Dashboard',
 	components: {
 		Pagination,
-		ButtonAddCosts,
 		FormAddCosts,
 		DisplayCosts,
 	},
@@ -96,6 +94,41 @@ export default {
 .container {
 	width: 1140px;
 	margin: 0 auto;
+}
+
+.btn-add-costs {
+	margin: 20px 0;
+}
+
+.btn-new-costs {
+	text-transform: uppercase;
+	font-size: 16px;
+	line-height: 24px;
+	padding: 10px;
+	border-radius: 15px;
+	border: none;
+	box-shadow: inset 0px 0px 16px 11px #a09898;
+	cursor: pointer;
+
+}
+
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 2s;
+}
+
+.fade-enter,
+.fade-leave-to {
+	opacity: 0;
+}
+
+.hidden {
+	display: none;
+}
+
+.btn-new-costs:hover {
+	box-shadow: 0px 0px 20px rgba(49, 122, 142, 0.732);
+	background-color: rgb(160 152 152 / 50%);
 }
 
 .position {
