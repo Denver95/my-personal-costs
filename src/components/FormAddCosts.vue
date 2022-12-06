@@ -1,25 +1,25 @@
 <template>
 	<!-- Создали верстку для заполнения данных -->
-	<div class="form-container" v-if="isShown">
-		<div class="block-form">
-			<!-- <input placeholder="Наименование" v-model="category" class="input-form-add input-FA-category" /> -->
-			<select v-model="category" class="input-form-add input-FA-category">
-				<option v-for="option, ind in options" v-bind:key="ind">{{ option }}</option>
-			</select>
-			<input placeholder="Цена" v-model="value" class="input-form-add input-FA-value" />
-			<input placeholder="Дата (01.01.2023)" v-model="date" class="input-form-add input-FA-date" />
-		</div>
-		<!-- При нажатии на кнопку будем осуществлять передачу данных родителю при помощи (onSaveClick) -->
-		<button v-on:click="onSaveClick" class="btn-form-add">add</button>
-		<button v-on:click="$modal.hide('formCosts')" class="btn-form-add">Close</button>
-	</div>
+	<v-dialog v-model="dialog" width="350px">
+		<template v-slot:activator="{ on }">
+			<v-btn color="#983" dark v-on="on">add new
+				costs</v-btn>
+		</template>
+		<v-card class="text-left pa-8 ">
+			<v-text-field v-model="date" label="Дата"></v-text-field>
+			<v-select v-model="category" label="Категория" :items="options"></v-select>
+			<v-text-field v-model.nubmer="value" label="Цена"></v-text-field>
+			<v-btn color="#983" dark v-on:click="onSaveClick">add</v-btn>
+			<v-btn color="#983" dark v-on:click="(dialog = false)">Close</v-btn>
+
+		</v-card>
+	</v-dialog>
 
 </template>
 
 <script>
 
-import modalPlugins from '@/plugins/modalPlugins';
-import { mapMutations, mapActions, mapGetters } from 'vuex';
+import { mapMutations, mapGetters } from 'vuex';
 
 export default {
 	name: 'FormAddCosts',
@@ -31,6 +31,7 @@ export default {
 			value: '',
 			isShown: false,
 			form: 'formCosts',
+			dialog: false,
 		}
 	},
 	computed: {
@@ -110,60 +111,5 @@ export default {
 </script>
 
 <style>
-.block-form {
-	display: flex;
-	align-items: center;
-	flex-wrap: wrap;
-	justify-content: center;
-	margin-bottom: 10px;
-}
 
-
-
-.input-form-add {
-	width: 300px;
-	text-align: center;
-	margin: 5px;
-	border: none;
-	box-sizing: border-box;
-	border-radius: 20px;
-	height: 30px;
-	box-shadow: inset 0px 0px 13px 8px #a09898;
-	padding: 0 10px;
-	display: inline-block;
-	cursor: pointer;
-	outline: none;
-}
-
-.input-form-add:hover {
-	box-shadow: 0px 0px 20px rgba(49, 122, 142, 0.732);
-	background-color: rgb(160 152 152 / 50%);
-}
-
-.btn-form-add {
-	outline: none;
-	text-align: center;
-	margin: 5px;
-	border: none;
-	box-sizing: border-box;
-	border-radius: 10px;
-	height: 30px;
-	box-shadow: inset 0px 0px 13px 8px #a09898;
-	padding: 0 10px;
-	width: 100px;
-	cursor: pointer;
-	text-transform: uppercase;
-}
-
-.btn-form-add:hover {
-	box-shadow: 0px 0px 20px rgba(49, 122, 142, 0.732);
-	background-color: rgb(160 152 152 / 50%);
-}
-
-.errorCategory,
-.errorValue,
-.errorDate {
-	box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.732);
-	background-color: rgba(255, 0, 0, 0.5);
-}
 </style>

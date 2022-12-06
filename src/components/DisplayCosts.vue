@@ -1,33 +1,26 @@
 <template>
-
-	<div class="block-display-costs">
-		<h3 class="SumCosts">Сумма общих расходов {{ getSumCosts }} р.</h3>
-		<ul class="table-display-costs">
-			<ul class="string-table-head">
-				<li class="colum-id table-text table-margin"><span class="tabel-span">№</span></li>
-				<li class="colum-date table-text table-margin"><span class="tabel-span">Дата</span></li>
-				<li class="colum-category table-text table-margin"><span class="tabel-span">Наименование</span></li>
-				<li class="colum-value table-text table-margin"><span class="tabel-span">Цена(p.)</span></li>
-			</ul>
-			<ul v-for="(item, index) of items" class="string-table-array" v-bind:key="index">
-				<li class="colum-id table-text table-margin">{{ index + 1 }}</li>
-				<li class="colum-date table-text table-margin">{{ item.date }}</li>
-				<li class="colum-category table-text table-margin">{{ item.category }}</li>
-				<li class="colum-value table-text table-margin">{{ item.value }} p.</li>
-			</ul>
-		</ul>
-
-	</div>
+	<v-container>
+		<h3 class="add-costs-text">Сумма общих расходов {{ getSumCosts }} р.</h3>
+		<v-row>
+			<v-col :cols="1">№</v-col>
+			<v-col :cols="3">Дата</v-col>
+			<v-col :cols="5">Наименование</v-col>
+			<v-col :cols="3">Цена(p.)</v-col>
+		</v-row>
+		<v-row v-for="(item, index) of items" v-bind:key="index">
+			<v-col :cols="1">{{ index + 1 }}</v-col>
+			<v-col :cols="3">{{ item.date }}</v-col>
+			<v-col :cols="5">{{ item.category }}</v-col>
+			<v-col :cols="2" align-center>{{ item.value }} p.</v-col>
+			<v-col :cols="1"><span v-on:click="onClickItem($event, item)" class="cursor">:</span></v-col>
+		</v-row>
+	</v-container>
 </template>
 
 <script>
-
-
-
 export default {
 	name: 'DisplayCosts',
 	props: {
-
 		// Мы сделали строгий вид, чтоб в случии передачи нам НЕ массива то сразу выдаст ошибку
 		items: {
 			//Строгий вид с указанием значения (Array) массив
@@ -37,69 +30,27 @@ export default {
 		getSumCosts: Number,
 
 	},
-
-	// computed: {
-	// 	...mapGetters({
-	// 		getSumCosts: 'getCostsListValue',
-	// 		costsList: 'getCostsList'
-	// 	}),
-
-	// }
+	methods: {
+		onClickItem(event, item) {
+			console.log(event)
+			console.log(item)
+		}
+	},
 }
 </script>
 
 <style>
-li {
-	list-style-type: none;
+.add-costs-text {
+	text-align: center;
+	margin: 10px 0px;
+	background-color: red;
 }
 
-.block-display-costs {
-	height: 360px;
+.text-center {
+	text-align: center;
 }
 
-.table-display-costs {
-	width: 600px;
-	background-color: rgb(210 188 139 / 51%);
-	margin: 0 auto;
-}
-
-.string-table-head {
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-}
-
-.colum-id {
-	width: 60px;
-	height: 30px;
-}
-
-.table-text {
-	font-size: 20px;
-	line-height: 30px;
-}
-
-
-
-.colum-date {
-	width: 140px;
-	height: 30px;
-}
-
-.colum-category {
-	width: 300px;
-	height: 30px;
-
-}
-
-.colum-value {
-	width: 100px;
-	height: 30px;
-}
-
-.string-table-array {
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
+.cursor {
+	cursor: pointer;
 }
 </style>

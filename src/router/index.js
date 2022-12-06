@@ -8,30 +8,31 @@ const routes = [
   {
     path: '/payment',
     name: 'Dashboard',
-    component: () => import('../page/Dashboard.page.vue'),
+    // Если мы зашли на эту страницу, то она загрузиться. Дали ей имя Dashboard
+    component: () => import(/*webpackChunkName:'Dashboard'*/'../page/Dashboard.page.vue'),
   },
   // {
   //   // Добовалили еще один дашборад
   //   path: '/payment/:page',
   //   name: 'Dashboard',
-  //   component: Dashboard,
+  //   component: () => import('../page/Dashboard.page.vue'),
   // },
   {
     //   * это свойство которое  дает возможность записывать  ссылки /about23423423 
     // path: '/about*',
     path: '/about',
     name: 'About',
-    component: () => import('../page/About.page.vue'),
+    component: () => import(/*webpackChunkName:'About'*/'../page/About.page.vue'),
   },
   {
     path: '/cart',
     name: 'Cart',
-    component: () => import('../page/cart.page.vue'),
+    component: () => import(/*webpackChunkName:'Cart'*/'../page/cart.page.vue'),
   },
   {
     path: '/error',
     name: 'Error404',
-    component: () => import('../page/Error404.page.vue')
+    component: () => import(/*webpackChunkName:'Error404'*/'../page/Error404.page.vue')
   },
 
 

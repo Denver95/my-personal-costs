@@ -1,15 +1,15 @@
 <template>
 
 	<div class="pagination">
-		<div @click="onClick(cur - 1)" class="page-back"> - </div>
+		<v-btn color="#983" dark @click="onClick(cur - 1)" class="page-back"> - </v-btn>
 		<!-- Выводим наши страницы -->
-		<div v-for="page, index in maxPage" v-bind:key="index" @click="onClick(page)"
+		<v-btn color="#983" dark v-for="page, index in maxPage" v-bind:key="index" @click="onClick(page)"
 			:class="{ active: page == cur, stylePage: page }">
 			{{
 					page
 			}}
-		</div>
-		<div @click="onClick(cur + 1)" class="page-next"> + </div>
+		</v-btn>
+		<v-btn color="#983" dark @click="onClick(cur + 1)" class="page-next"> + </v-btn>
 	</div>
 
 </template>
@@ -50,30 +50,7 @@ export default {
 
 <style>
 .pagination {
-	display: flex;
-	background-color: rgb(34 126 20 / 47%);
-	cursor: pointer;
-	font-size: 20px;
-	line-height: 30px;
-	justify-content: center;
-	margin: 20px auto;
-	max-width: 400px;
-}
-
-.page-back {
-	padding: 0 10px;
-}
-
-.page-next {
-	padding: 0 10px;
-}
-
-.stylePage {
-	padding: 0 5px;
-}
-
-.active {
-	padding: 0 10px;
-	background-color: burlywood;
+	text-align: center;
+	margin: 40px 0px;
 }
 </style>

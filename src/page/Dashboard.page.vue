@@ -1,25 +1,20 @@
 <template>
 	<!-- Контейнер для стилей или выравнивания -->
-	<div class="style_container">
+	<v-container class="style_container">
 		<!-- Заголовок приложения -->
-		<header class="header-top-costs">
-			<div class="container">
-				<h2 class="header-top-costs-h2">My personal costs</h2>
-			</div>
-		</header>
+		<div class="text-h5 text-md-h3 my-8 center-text">
+			My personal costs
+		</div>
 		<!-- Основная разметка приложения, включая отдельные компоненты -->
-		<main class="main-container">
-			<div class="container position">
+		<v-row class=" main-container">
+			<v-col class="container position">
 				<!--Разметка для кнопки добавления расходов  -->
-				<div class="btn-add-costs">
-					<!-- Вызываем в modalPlugins метод show -->
-					<button class="btn-new-costs" v-on:click="$modal.show('formCosts')">add new costs</button>
-				</div>
 				<!-- Блок для отображения формы ввода расходов  с анимацией(Смотреть стили)-->
-				<Transition name="fade" class="form-add-costs">
+				<div>
 					<!-- Принимаем значения  -->
 					<FormAddCosts />
-				</Transition>
+				</div>
+
 				<!-- Блок отоборажения данных о затрах и граффик -->
 				<div class="display-costs">
 					<!-- Передаем данные из costsList в наш аргумент items -->
@@ -28,9 +23,12 @@
 				<div class="pagination-costs">
 					<Pagination :cur="page" :n="pageQuantity" :length="costsList.length" @pagination="onChangePage" />
 				</div>
-			</div>
-		</main>
-	</div>
+			</v-col>
+			<v-col>
+				<div>Good Nice</div>
+			</v-col>
+		</v-row>
+	</v-container>
 </template>
 
 <script>
@@ -38,6 +36,7 @@ import { mapActions, mapGetters } from 'vuex';
 import FormAddCosts from '../components/FormAddCosts.vue';
 import DisplayCosts from '../components/DisplayCosts.vue';
 import Pagination from '../components/Pagination.vue';
+
 
 export default {
 	name: 'Dashboard',
@@ -87,63 +86,7 @@ export default {
 </script>
 
 <style>
-.header-top-costs {
-	padding: 30px 0;
-}
-
-.container {
-	width: 1140px;
-	margin: 0 auto;
-}
-
-.btn-add-costs {
-	margin: 20px 0;
-}
-
-.btn-new-costs {
-	text-transform: uppercase;
-	font-size: 16px;
-	line-height: 24px;
-	padding: 10px;
-	border-radius: 15px;
-	border: none;
-	box-shadow: inset 0px 0px 16px 11px #a09898;
-	cursor: pointer;
-
-}
-
-.fade-enter-active,
-.fade-leave-active {
-	transition: opacity 2s;
-}
-
-.fade-enter,
-.fade-leave-to {
-	opacity: 0;
-}
-
-.hidden {
-	display: none;
-}
-
-.btn-new-costs:hover {
-	box-shadow: 0px 0px 20px rgba(49, 122, 142, 0.732);
-	background-color: rgb(160 152 152 / 50%);
-}
-
-.position {
-	position: relative;
-}
-
-
-.header-top-costs-h2 {
-	display: inline-block;
-	font-size: 30px;
-	line-height: 45px;
-}
-
-
-.main-container {
-	margin: 20px 0px;
+.center-text {
+	text-align: center;
 }
 </style>

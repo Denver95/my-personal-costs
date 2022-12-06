@@ -43,6 +43,8 @@ export default new Vuex.Store({
         state.categoryList.push(...payload)
       }
     },
+
+
   },
   //асинхранный вызво
   actions: {
@@ -271,5 +273,7 @@ export default new Vuex.Store({
         commit('setCategoryData', res)
       })
     },
+
+
   },
 })
