@@ -4,10 +4,11 @@ import store from './store'
 import router from './router'
 import modalPlugins from './plugins/modalPlugins'
 import vuetify from './plugins/vuetify'
+import context from './plugins/contextMenu'
 
 Vue.config.productionTip = false
 Vue.use(modalPlugins)
-
+Vue.use(context)
 new Vue({
   store,
   router,

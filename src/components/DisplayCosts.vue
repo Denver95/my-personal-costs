@@ -12,12 +12,15 @@
 			<v-col :cols="3">{{ item.date }}</v-col>
 			<v-col :cols="5">{{ item.category }}</v-col>
 			<v-col :cols="2" align-center>{{ item.value }} p.</v-col>
-			<v-col :cols="1"><span v-on:click="onClickItem($event, item)" class="cursor">:</span></v-col>
+			<v-col :cols="1" v-on:click="onClickItem($event, item, index)" class="cursor ">
+				...
+			</v-col>
 		</v-row>
 	</v-container>
 </template>
 
 <script>
+
 export default {
 	name: 'DisplayCosts',
 	props: {
@@ -31,9 +34,23 @@ export default {
 
 	},
 	methods: {
-		onClickItem(event, item) {
-			console.log(event)
-			console.log(item)
+		// Передаем данные события  ContextMEnu
+		onClickItem($event, item, index) {
+			const items = [
+				{
+					text: 'Редактировать',
+					action: () => {
+						console.log(index, 'Редактировать')
+					}
+				},
+				{
+					text: 'Удалить',
+					action: () => {
+						this.items.includes(index).splice(1, index)
+					}
+				}
+			]
+			this.$context.show({ $event, items })
 		}
 	},
 }

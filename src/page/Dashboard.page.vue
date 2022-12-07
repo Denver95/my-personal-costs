@@ -15,11 +15,16 @@
 					<FormAddCosts />
 				</div>
 
+				<div class="context-block">
+					<ContextMenu />
+				</div>
 				<!-- Блок отоборажения данных о затрах и граффик -->
 				<div class="display-costs">
 					<!-- Передаем данные из costsList в наш аргумент items -->
 					<DisplayCosts :items="curentElements" :getSumCosts="getSumCosts" />
+
 				</div>
+
 				<div class="pagination-costs">
 					<Pagination :cur="page" :n="pageQuantity" :length="costsList.length" @pagination="onChangePage" />
 				</div>
@@ -36,6 +41,7 @@ import { mapActions, mapGetters } from 'vuex';
 import FormAddCosts from '../components/FormAddCosts.vue';
 import DisplayCosts from '../components/DisplayCosts.vue';
 import Pagination from '../components/Pagination.vue';
+import ContextMenu from '@/components/ContextMenu.vue';
 
 
 export default {
@@ -44,6 +50,7 @@ export default {
 		Pagination,
 		FormAddCosts,
 		DisplayCosts,
+		ContextMenu,
 	},
 	data() {
 		return {
